@@ -4,30 +4,37 @@
 
 #include "TreeMap.h"
 
-#define MAX(a, b) (((a) >= (b))?(a):(b))
-
+#define MAX(a, b) (((a) >= (b)) ? (a) : (b))
 
 /* Creeaza un arbore cu o serie de metode asociate
  *
  * return: arborele creat
  */
-TTree* createTree(void* (*createElement)(void*),
-				  void (*destroyElement)(void*),
-				  void* (*createInfo)(void*),
-				  void (*destroyInfo)(void*),
-				  int compare(void*, void*)) {
-	return NULL;
+TTree *createTree(void *(*createElement)(void *),
+				  void (*destroyElement)(void *),
+				  void *(*createInfo)(void *),
+				  void (*destroyInfo)(void *),
+				  int compare(void *, void *))
+{
+	TTree *tree = (TTree *)malloc(sizeof(TTree));
+	tree->root = NULL;
+	tree->createElement = createElement;
+	tree->destroyElement = destroyElement;
+	tree->createInfo = createInfo;
+	tree->destroyInfo = destroyInfo;
+	tree->compare = compare;
+	tree->size = 0;
+	return tree;
 }
-
 
 /* Verifica daca un arbore este gol (vid)
  * 		1 - daca arborele este gol
  * 		0 - in caz contrar
  */
-int isEmpty(TTree* tree) {
-	return 1;
+int isEmpty(TTree *tree)
+{
+	return tree->root == NULL ? 1 : 0;
 }
-
 
 /* Cauta un anumit element in interiorul unui arbore
  *
@@ -37,56 +44,60 @@ int isEmpty(TTree* tree) {
  * x: radacina arborelui curent (in care se face cautarea)
  * elem: elementul ce trebuie cautat
  */
-TreeNode* search(TTree* tree, TreeNode* x, void* elem) {
+TreeNode *search(TTree *tree, TreeNode *x, void *elem)
+{
 	return NULL;
 }
-
 
 /* Gaseste nodul cu elementul minim dintr-un arbore
  * avand radacina in x
  */
-TreeNode* minimum(TreeNode* x) {
+TreeNode *minimum(TreeNode *x)
+{
 	return NULL;
 }
 
 /* Gaseste nodul cu elementul maxim dintr-un arbore
  * avand radacina in x
  */
-TreeNode* maximum(TreeNode* x) {
+TreeNode *maximum(TreeNode *x)
+{
 	return NULL;
 }
-
 
 /* Functie pentru gasirea succesorului unui nod
  * (succesorul in inordine)
  */
-TreeNode* successor(TreeNode* x) {
+TreeNode *successor(TreeNode *x)
+{
 	return NULL;
 }
-
 
 /* Functie pentru gasirea predecesorului unui nod
  * (predecesorul in inordine)
  */
-TreeNode* predecessor(TreeNode* x) {
+TreeNode *predecessor(TreeNode *x)
+{
 	return NULL;
 }
 
-
 /* Actualizeaza inaltimea unui nod din arbore
  */
-void updateHeight(TreeNode* x) {
+void updateHeight(TreeNode *x)
+{
 
 	int leftHeight = 0;
 	int rightHeight = 0;
 
-	if (x != NULL) {
-		if (x->left != NULL)  leftHeight  = x->left->height;
-		if (x->right != NULL) rightHeight = x->right->height;
+	if (x != NULL)
+	{
+		if (x->left != NULL)
+			leftHeight = x->left->height;
+		if (x->right != NULL)
+			rightHeight = x->right->height;
 		x->height = MAX(leftHeight, rightHeight) + 1;
 	}
 }
-
 
 /* Functie ce primeste adresa unui arbore si
  * a unui nod x si realizeaza o rotatie la stanga
@@ -98,10 +109,11 @@ void updateHeight(TreeNode* x) {
  *	   / \			  / \
  *    b   c          a   b
  */
-void avlRotateLeft(TTree* tree, TreeNode* x) {
-	if (tree == NULL || x == NULL) return;
+void avlRotateLeft(TTree *tree, TreeNode *x)
+{
+	if (tree == NULL || x == NULL)
+		return;
 }
-
 
 /* Functie ce primeste adresa unui arbore si
  * a unui nod x si realizeaza o rotatie la dreapta
@@ -113,18 +125,19 @@ void avlRotateLeft(TTree* tree, TreeNode* x) {
  *	 / \			      / \
  *  a   b                b   c
  */
-void avlRotateRight(TTree* tree, TreeNode* y) {
-	if (tree == NULL || y == NULL) return;
+void avlRotateRight(TTree *tree, TreeNode *y)
+{
+	if (tree == NULL || y == NULL)
+		return;
 }
-
 
 /* Calculeaza factorul de echilibrare pentru un nod x
  * (AVL balance factor)
-*/
-int avlGetBalance(TreeNode *x) {
+ */
+int avlGetBalance(TreeNode *x)
+{
 	return 0;
 }
-
 
 /* Functie pentru reechilibrarea unui arbore AVL
  * in urma unei inserari prin rotatii simple sau duble
@@ -132,23 +145,23 @@ int avlGetBalance(TreeNode *x) {
  * arborele de jos in sus, spre radacina
  *
  */
-void avlFixUp(TTree* tree, TreeNode* y) {
-
+void avlFixUp(TTree *tree, TreeNode *y)
+{
 }
-
 
 /* Functie pentru crearea unui nod
  *
  * value: valoarea/cheia din cadrul arborelui
  * info: informatia/valoarea din dictionar
  */
-TreeNode* createTreeNode(TTree *tree, void* value, void* info) {
+TreeNode *createTreeNode(TTree *tree, void *value, void *info)
+{
 
 	if (tree == NULL)
 		return NULL;
 
 	// Alocarea memoriei
-	TreeNode* node = (TreeNode*) malloc(sizeof(TreeNode));
+	TreeNode *node = (TreeNode *)malloc(sizeof(TreeNode));
 
 	// Setarea elementului si a informatiei
 	node->elem = tree->createElement(value);
@@ -160,7 +173,6 @@ TreeNode* createTreeNode(TTree *tree, void* value, void* info) {
 	// Initializarea legaturilor din cadrul listei dublu inlantuite
 	node->next = node->prev = node->end = NULL;
 
-
 	// Inaltimea unui nod nou este 1
 	// Inaltimea lui NULL este 0
 	node->height = 1;
@@ -168,25 +180,25 @@ TreeNode* createTreeNode(TTree *tree, void* value, void* info) {
 	return node;
 }
 
-
 /* Inserarea unul nou nod in cadrul multi-dictionarului
  * ! In urma adaugarii arborele trebuie sa fie echilibrat
  *
  */
-void insert(TTree* tree, void* elem, void* info) {
-
+void insert(TTree *tree, void *elem, void *info)
+{
 }
-
 
 /* Eliminarea unui nod dintr-un arbore
  *
  * ! tree trebuie folosit pentru eliberarea
  *   campurilor `elem` si `info`
  * */
-void destroyTreeNode(TTree *tree, TreeNode* node){
+void destroyTreeNode(TTree *tree, TreeNode *node)
+{
 
 	// Verificarea argumentelor functiei
-	if(tree == NULL || node == NULL) return;
+	if (tree == NULL || node == NULL)
+		return;
 
 	// Folosirea metodelor arborelui
 	// pentru de-alocarea campurilor nodului
@@ -197,21 +209,20 @@ void destroyTreeNode(TTree *tree, TreeNode* node){
 	free(node);
 }
 
-
 /* Eliminarea unui nod din arbore
  *
  * elem: cheia nodului ce trebuie sters
  * 	! In cazul in care exista chei duplicate
  *	  se va sterge ultimul nod din lista de duplicate
  */
-void delete(TTree* tree, void* elem) {
-
+void delete (TTree *tree, void *elem)
+{
 }
-
 
 /* Eliberarea memoriei unui arbore
  */
-void destroyTree(TTree* tree){
+void destroyTree(TTree *tree)
+{
 
 	/* Se poate folosi lista dublu intalntuita
 	 * pentru eliberarea memoriei
