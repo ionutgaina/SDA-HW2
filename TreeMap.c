@@ -46,6 +46,22 @@ int isEmpty(TTree *tree)
  */
 TreeNode *search(TTree *tree, TreeNode *x, void *elem)
 {
+	TreeNode *aux = NULL;
+
+	if (x == NULL)
+		return NULL;
+
+	if (tree->compare(x->elem, elem) == 0)
+		return x;
+
+	aux = search(tree, x->left, elem);
+	if (aux != NULL)
+		return aux;
+
+	aux = search(tree, x->right, elem);
+	if (aux != NULL)
+		return aux;
+
 	return NULL;
 }
 
